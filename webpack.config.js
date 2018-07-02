@@ -3,6 +3,7 @@ var HTMLWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var process = require('process');
+var webpack = require('webpack');
 
 var mode = process.env.NODE_ENV || 'development';
 var isDev = mode === 'development';
@@ -42,7 +43,9 @@ module.exports = {
         rules: [
             {
                 test: /\.s?css$/,
-                use: isDev ? styleRules : ExtractTextWebpackPlugin.extract({
+                use: isDev ? [
+                    { loader: 'style-loader' }
+                ].concat(styleRules) : ExtractTextWebpackPlugin.extract({
                     fallback: 'style-loader',
                     use: styleRules
                 })
@@ -55,7 +58,9 @@ module.exports = {
             }
         ]
     },
-    plugins: isDev ? plugins : plugins.concat([
+    plugins: isDev ? plugins.concat(
+        new webpack.HotModuleReplacementPlugin()
+    ) : plugins.concat([
         new ExtractTextWebpackPlugin('styles.css')
     ])
 }
