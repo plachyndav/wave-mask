@@ -1,0 +1,21 @@
+html,
+body,
+.container {
+    height: 100%;
+}
+
+body {
+    background-color: #fff;
+}
+
+.flex {
+    display: flex;
+    &.centered {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.image-holder {
+    align-self: center;
+}
