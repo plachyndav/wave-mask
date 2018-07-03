@@ -1,7 +1,10 @@
-var Wave = require('./wave');
-var holder = document.getElementsByClassName('image-holder')[0];
-var wave = new Wave(document.getElementsByTagName('img')[0]);
-wave.onload = function (svg) {
-    holder.innerHTML = '';
-    holder.appendChild(svg);
-}
+var Circle = require('./circle');
+var withMaskImages = document.getElementsByClassName('with-mask');
+Array.prototype.forEach.call(withMaskImages, function (el) {
+    var wave = new Circle(el);
+    wave.onload = function (svg) {
+        var parent = el.parentElement;
+        parent.innerHTML = '';
+        parent.appendChild(svg);
+    }
+});
