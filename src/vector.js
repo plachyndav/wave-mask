@@ -97,8 +97,31 @@ var liveCircle = function (radius) {
     }
 }
 
+var triangle = function (base) {
+    return function (svg, attributes, maskId) {
+        var h = 0.866 * base;
+        var p1x = attributes.width / 2;
+        var p1y = attributes.height / 2 - h / 2; 
+        var p2x = attributes.width / 2 - base / 2;
+        var p2y = attributes.height / 2 + h / 2; 
+        var p3x = attributes.width / 2 + base / 2;
+        var p3y = attributes.height / 2 + h / 2; 
+
+        var pointsStr = p1x + "," + p1y + " " + p2x + "," + p2y + " " +p3x + "," + p3y;
+        
+        var triangle = el('polygon', {
+            points: pointsStr,
+            fill: '#fff'
+        });
+        return svg.appendChild(el('mask', {
+            id: maskId
+        }, triangle))
+    }
+}
+
 module.exports.el = el;
 module.exports.namespaces = namespaces;
 module.exports.circle = circle;
 module.exports.createImageSvg = createImageSvg
 module.exports.liveCircle = liveCircle;
+module.exports.triangle = triangle;
